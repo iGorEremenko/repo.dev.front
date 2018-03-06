@@ -1,10 +1,11 @@
-// Добавление класса при скролле 
+// Добавление класса при скролле
 jQuery(window).scroll(function() {
-    var the_top = jQuery(document).scrollTop();
-    if (the_top > 100) {
-        jQuery('.top_mnu').addClass('fixed');
+    var the_top = jQuery(document).scrollTop(); // привязываем отсчет от верха документа
+    // говорим на сколько пиксилей нужно проскролить вниз что бы добавить класс (скрол от верха > если больше значения то присвоить класс)
+    if (the_top > 1150) { 
+        jQuery('.grid-animate-fix-1').addClass('engaged'); // находим jQuery('.класс') по классу или id элемент к которому через .addClass('класс') добавляем клас
     }
     else {
-        jQuery('.top_mnu').removeClass('fixed');
+        jQuery('.grid-animate-fix-1').removeClass('engaged'); // иначе если не проскроленно и условие не выполняется то убираем класс при скроле вверх
     }
 });
