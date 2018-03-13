@@ -341,12 +341,324 @@ function название_темы_widgets_init()
 // так подключается данный виджет где угодно в шаблоне страницы
 <?php dynamic_sidebar( 'sidebar-1' ); ?>
 
+/**
+ **  ресайз картинок для увеличения на сайте в попапах - маленькая картинка -> клик-> попап -> большая картинка!
+ **/
+function resize_imgs()
+{
+    add_image_size('1920x1080', 1920, 1080, true);
+    add_image_size('1920x720', 1920, 720, true);
+    add_image_size('900x305', 900, 305, true);
+    add_image_size('768x600', 768, 600, true);
+    add_image_size('641x415', 641, 415, true);
+    add_image_size('638x500', 638, 500, true);
+    add_image_size('550x415', 550, 415, true);
+    add_image_size('370x368', 370, 368, true);
+    add_image_size('356x493', 356, 493, true);
+    add_image_size('353x353', 353, 353, true);
+    add_image_size('200x283', 200, 283, true);
+    add_image_size('362x58', 362, 58, true);
+    add_image_size('234x58', 234, 58, true);
+    add_image_size('265x37', 265, 37, true);
+    add_image_size('181x129', 181, 129, true);
+    add_image_size('54x50', 54, 50, true);
+}
+
+resize_imgs();
+
+
+/**
+ **  присвоение кастомных класов для тега body на разных страницах и шаблонах страниц - нужно розобраться
+ **/
+function custom_body_class($wp_classes)
+{
+    if (is_page('index')) {
+        $wp_classes[] = 'index-page';
+    }
+
+    if(is_page('commercial')){
+        $wp_classes[] = 'commercial-page';
+    }
+
+    if(is_page('installation')){
+        $wp_classes[] = 'installation-page';
+    }
+    return $wp_classes;
+}
+
+add_filter('body_class', 'custom_body_class', 10, 2);
 
 
 
+/**
+ **  какието опции для настроек кастомных полей?
+ **/
+if (function_exists('register_field_group')) {
+    // ОПЦИИ ТЕМЫ - Скрипты
+    register_field_group(array(
+        'id' => 'acf_-options__scripts',
+        'title' => 'Скрипты',
+        'fields' => array(
+            array(
+                'key' => 'field_scripts',
+                'label' => 'Скрипты',
+                'name' => 'scripts',
+                'type' => 'repeater',
+                'instructions' => 'Вы можете вставить сюда скрипты Яндекс-Метрики, Гугл-Аналитики, сервисов обратной связи и прочие.<br>Вы можете на время отключить скрипт, сняв галочку. Если вы захотите вновь активировать скрипт, вам не придётся его искать.',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_script__code',
+                        'label' => 'Код',
+                        'name' => 'script__code',
+                        'type' => 'textarea',
+                        'column_width' => '',
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'maxlength' => '',
+                        'formatting' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_script__position',
+                        'label' => 'Положение',
+                        'name' => 'script__position',
+                        'type' => 'select',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => 10,
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'choices' => array(
+                            'header' => 'header',
+                            'footer' => 'footer',
+                        ),
+                        'default_value' => array(
+                            'header' => 'header',
+                        ),
+                        'allow_null' => 0,
+                        'multiple' => 0,
+                        'ui' => 0,
+                        'ajax' => 0,
+                        'placeholder' => '',
+                        'disabled' => 0,
+                        'readonly' => 0,
+                    ),
+                    array(
+                        'key' => 'field_script__on',
+                        'label' => 'Состояние',
+                        'name' => 'script__on',
+                        'type' => 'true_false',
+                        'column_width' => 8,
+                        'message' => '',
+                        'default_value' => 1,
+                    ),
+                ),
+                'row_min' => 0,
+                'row_limit' => '',
+                'layout' => 'table',
+                'button_label' => 'Добавить скрипт',
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'options_page',
+                    'operator' => '==',
+                    'value' => 'acf-options-scripts',
+                    'order_no' => 0,
+                    'group_no' => 0,
+                ),
+            ),
+        ),
+        'options' => array(
+            'position' => 'normal',
+            'layout' => 'no_box',
+            'hide_on_screen' => array(),
+        ),
+        'menu_order' => 0,
+    ));
+}
 
 
 
+if (function_exists('acf_add_options_page')) {
+    acf_add_options_page(array(
+        'page_title' => 'Основные',
+        'menu_title' => 'Основные',
+        'menu_slug' => 'theme-options',
+        'capability' => 'manage_options',
+        'parent_slug' => '',
+        'position' => '1.1',
+        'ico_url' => false,
+    ));
+    acf_add_options_page(array(
+        'page_title' => 'Настройки',
+        'menu_title' => 'Настройки',
+        'menu_slug' => 'acf-options-common',
+        'capability' => 'manage_options',
+        'parent_slug' => 'theme-options',
+        'position' => false,
+        'ico_url' => false,
+    ));
+    acf_add_options_page(array(
+        'page_title' => 'Скрипты',
+        'menu_title' => 'Скрипты',
+        'menu_slug' => 'acf-options-scripts',
+        'capability' => 'manage_options',
+        'parent_slug' => 'theme-options',
+        'position' => false,
+        'ico_url' => false,
+    ));
+}
+
+if( function_exists('acf_add_local_field_group') ):
+
+    acf_add_local_field_group(array(
+        'key' => 'group_5a9a73a60a26c',
+        'title' => 'Settings',
+        'fields' => array(
+            array(
+                'key' => 'field_5a9a73b8ec80e',
+                'label' => 'Facebook',
+                'name' => 'facebook',
+                'type' => 'link',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'return_format' => 'url',
+            ),
+            array(
+                'key' => 'field_5a9a74498c4ea',
+                'label' => 'Twitter',
+                'name' => 'twitter',
+                'type' => 'link',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'return_format' => 'url',
+            ),
+            array(
+                'key' => 'field_5a9a74708c4eb',
+                'label' => 'Google',
+                'name' => 'google',
+                'type' => 'link',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'return_format' => 'url',
+            ),
+            array(
+                'key' => 'field_5a9a74b98c4ec',
+                'label' => 'Address',
+                'name' => 'address',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_5a9a74d38c4ed',
+                        'label' => 'Country, City',
+                        'name' => 'country_city',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_5a9a75128c4ee',
+                        'label' => 'Postcode, street',
+                        'name' => 'postcode_street',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_5a9a75678c4ef',
+                        'label' => 'Phone',
+                        'name' => 'phone',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                ),
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'options_page',
+                    'operator' => '==',
+                    'value' => 'acf-options-common',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => 1,
+        'description' => '',
+    ));
+
+endif;
 
 
 
