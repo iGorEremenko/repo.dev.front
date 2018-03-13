@@ -219,7 +219,7 @@ function my_custom_sizes($sizes)
     ));
 }
 
-// Exclude pages from WordPress Search
+// Исключить страницы из WordPress Search
 if (!is_admin()) {
     function wpb_search_filter($query)
     {
