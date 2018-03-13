@@ -10,9 +10,10 @@ function isoftpedia_setup()
     add_theme_support('title-tag');
 /**
  *  это пишется в шаблоне
+ * <title><?php bloginfo('name'); ?> |
+ *<?php is_home() ? bloginfo('description') : wp_title(''); ?></title>
  */
-<title><?php bloginfo('name'); ?> |
-        <?php is_home() ? bloginfo('description') : wp_title(''); ?></title> 
+
 
     /**
      *  логотип сайта и указание размера
@@ -340,7 +341,7 @@ function название_темы_widgets_init()
     ));
 }
 // так подключается данный виджет где угодно в шаблоне страницы
-<?php dynamic_sidebar( 'sidebar-1' ); ?>
+// <?php dynamic_sidebar( 'sidebar-1' ); 
 
 /**
  **  ресайз картинок для увеличения на сайте в попапах - маленькая картинка -> клик-> попап -> большая картинка!
