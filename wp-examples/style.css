@@ -1,17 +1,17 @@
 /*
-Theme Name: OSX86
-Theme URI:
+Theme Name: название темы
+Theme URI: урл на тему
 Author: MerelyiGor
-Author URI:
-Description: Description
-Version: 1.0
-Tags: Hackintosh
-Text Domain:
+Author URI: http://igore.zzz.com.ua/
+Description: описание к теме
+Version: 1.0 - версия темы
+Tags: теги по теме
+Text Domain: хз нахуй это надо ваще))
 */
 
 /*
 **для скрытия zzz.com.ua 
 */
 .cbalink {
-    display: none !important;
+    display: none;!important;
 }
