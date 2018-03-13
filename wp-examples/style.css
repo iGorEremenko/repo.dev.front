@@ -1,0 +1,17 @@
+/*
+Theme Name: OSX86
+Theme URI:
+Author: MerelyiGor
+Author URI:
+Description: Description
+Version: 1.0
+Tags: Hackintosh
+Text Domain:
+*/
+
+/*
+**для скрытия zzz.com.ua 
+*/
+.cbalink {
+    display: none !important;
+}
